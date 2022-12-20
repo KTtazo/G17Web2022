@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { urlPaths } from "../../navigation/url-paths";
 import { TextInput } from "../text-input";
 import styles from "./login.module.scss";
 
@@ -51,9 +53,9 @@ export const LoginForm = (props) => {
 
         <div className={styles["buttons"]}>
           <button type="submit">Log In</button>
-          <button onClick={() => toggleForm("register")}>
-            Registro de tutor
-          </button>
+          <Link className={styles["item"]} to={`${urlPaths.register}/`}>
+            test{" "}
+          </Link>
         </div>
       </form>
     </div>

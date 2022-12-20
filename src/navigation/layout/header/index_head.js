@@ -14,8 +14,8 @@ function Header() {
       <Link className={styles["item"]} to={urlPaths.inicioAlumno}>
         Inicio{" "}
       </Link>
-      <Link className={styles["item"]} to={`${urlPaths.information}/1`}>
-        test{" "}
+      <Link className={styles["item"]} to={`${urlPaths.datosGenerales}/`}>
+        Datos generales{" "}
       </Link>
     </header>
   );

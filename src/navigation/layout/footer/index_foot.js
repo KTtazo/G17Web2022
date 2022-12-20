@@ -11,18 +11,18 @@ function Footer() {
           Register
         </Link>
         <Link className={styles["item"]} to={urlPaths.inicioAlumno}>
-          Inicio{" "}
+          Inicio Alumno{" "}
         </Link>
         <Link className={styles["item"]} to={`${urlPaths.information}/1`}>
-          test{" "}
+          Info Practicas{" "}
         </Link>
-        <Link className={styles["item"]} to={`${urlPaths.inicioTutor}/1`}>
+        <Link className={styles["item"]} to={`${urlPaths.inicioTutor}/`}>
           Inicio Tutor{" "}
         </Link>
-        <Link className={styles["item"]} to={`${urlPaths.inicioResponsable}/1`}>
+        <Link className={styles["item"]} to={`${urlPaths.inicioResponsable}/`}>
           Inicio Responsable{" "}
         </Link>
-        <Link className={styles["item"]} to={`${urlPaths.datosPractica}/1`}>
+        <Link className={styles["item"]} to={`${urlPaths.datosPractica}/`}>
           Datos de Practicas{" "}
         </Link>
     </footer>
