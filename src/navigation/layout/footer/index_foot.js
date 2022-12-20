@@ -3,15 +3,28 @@ import { urlPaths } from "../../url-paths";
 import styles from "./style.module.scss";
 function Footer() {
   return (
-    <footer>
-      <div>
-        <Link to={urlPaths.login}>Login</Link>
-        <Link to={urlPaths.register}>Register</Link>
-        <Link to={urlPaths.inicioAlumno}>InicioAlumno </Link>
-        <Link to={urlPaths.inicioTut}>InicioTutor </Link>
-        <Link to={urlPaths.inicioResponsable}>InicioResponsable </Link>
-        <Link to={urlPaths.datosPractica}>InicioPráctica </Link>
-      </div>
+    <footer className={styles["header"]}>
+        <Link className={styles["item"]} to={urlPaths.login}>
+          Login
+        </Link>
+        <Link className={styles["item"]} to={urlPaths.register}>
+          Register
+        </Link>
+        <Link className={styles["item"]} to={urlPaths.inicioAlumno}>
+          Inicio{" "}
+        </Link>
+        <Link className={styles["item"]} to={`${urlPaths.information}/1`}>
+          test{" "}
+        </Link>
+        <Link className={styles["item"]} to={`${urlPaths.inicioTutor}/1`}>
+          Inicio Tutor{" "}
+        </Link>
+        <Link className={styles["item"]} to={`${urlPaths.inicioResponsable}/1`}>
+          Inicio Responsable{" "}
+        </Link>
+        <Link className={styles["item"]} to={`${urlPaths.datosPractica}/1`}>
+          Datos de Practicas{" "}
+        </Link>
     </footer>
   );
 }
