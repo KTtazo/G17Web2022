@@ -4,8 +4,9 @@ export const urlPaths = {
   home: "/",
   login: "/login",
   register: "/register",
-  inicioAlumno: '/inicio',
-  inicioResponsable: '/inicioRes',
-  inicioTutor: '/inicioTut',
-  datosPractica: '/datosPrac'
+  inicioAlumno: "/inicio",
+  inicioResponsable: "/inicioRes",
+  inicioTutor: "/inicioTut",
+  datosPractica: "/datosPrac",
+  information: "/information",
 };
