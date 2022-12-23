@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { urlPaths } from "../../navigation/url-paths";
+import { Button } from "../button/button";
 import { TextInput } from "../text-input";
 import styles from "./login.module.scss";
 
@@ -21,6 +22,7 @@ export const LoginForm = (props) => {
     setCurrentForm(formName);
   };
 
+  const navigate = useNavigate();
   return (
     <div className={styles["auth-form-container"]}>
       <form className={styles["login-form"]} onSubmit={handleSubmit}>
@@ -56,6 +58,14 @@ export const LoginForm = (props) => {
           <Link className={styles["item"]} to={`${urlPaths.register}/`}>
             test{" "}
           </Link>
+          <Button
+            onButtonClick={() => {
+              navigate(urlPaths.register);
+            }}
+            className={styles["button"]} ///you can modify the style in the scss file, under .button
+          >
+            Register
+          </Button>
         </div>
       </form>
     </div>

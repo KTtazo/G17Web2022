@@ -1,0 +1,21 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  font-size: 20px;
+  color: green;
+  background-color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0 15px;
+  border: 0;
+  &:hover {
+    background-color: yellow;
+    color: white !important;
+  }
+}

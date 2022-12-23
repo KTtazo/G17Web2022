@@ -1,5 +1,4 @@
 .auth-form-container {
-
   .login-form {
     text-align: center;
     display: flex;
@@ -22,60 +21,63 @@
       gap: 30px;
     }
     .item {
-    color: rgb(255, 255, 255);
-    font-family: "Open Sans", sans-serif;
-    font-size: 30px;
-    font-weight: 30;
-    line-height: 32px;
-    margin: 0 0 72px;
-    text-align: center;
+      color: rgb(255, 255, 255);
+      font-family: "Open Sans", sans-serif;
+      font-size: 30px;
+      font-weight: 30;
+      line-height: 32px;
+      margin: 0 0 72px;
+      text-align: center;
 
-    padding: 10px 20px;
+      padding: 10px 20px;
 
-    &:hover {
-      background-color: rgb(84, 67, 218);
+      &:hover {
+        background-color: rgb(84, 67, 218);
+      }
+    }
+
+    h1 {
+      color: #111;
+      font-family: "Helvetica Neue", sans-serif;
+      font-size: 60px;
+      font-weight: bold;
+      letter-spacing: -1px;
+      line-height: 1;
+      text-align: center;
+    }
+
+    h2 {
+      color: #111;
+      font-family: "Open Sans", sans-serif;
+      font-size: 30px;
+      font-weight: 30;
+      line-height: 32px;
+      margin: 0 0 72px;
+      text-align: center;
+    }
+
+    p {
+      color: #685206;
+      font-family: "Helvetica Neue", sans-serif;
+      font-size: 14px;
+      line-height: 24px;
+      margin: 0 0 24px;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+    button {
+      border: none;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .button {
+    }
+
+    .link-btn {
+      background: none;
+      color: white;
+      text-decoration: underline;
     }
   }
-  
-  h1 {
-    color: #111;
-    font-family: "Helvetica Neue", sans-serif;
-    font-size: 60px;
-    font-weight: bold;
-    letter-spacing: -1px;
-    line-height: 1;
-    text-align: center;
-  }
-
-  h2 {
-    color: #111;
-    font-family: "Open Sans", sans-serif;
-    font-size: 30px;
-    font-weight: 30;
-    line-height: 32px;
-    margin: 0 0 72px;
-    text-align: center;
-  }
-
-  p {
-    color: #685206;
-    font-family: "Helvetica Neue", sans-serif;
-    font-size: 14px;
-    line-height: 24px;
-    margin: 0 0 24px;
-    text-align: justify;
-    text-justify: inter-word;
-  }
-  button {
-    border: none;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  .link-btn {
-    background: none;
-    color: white;
-    text-decoration: underline;
-  }
-}
 }

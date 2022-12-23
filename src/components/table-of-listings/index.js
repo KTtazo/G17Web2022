@@ -1,17 +1,24 @@
 import styles from "./style.module.scss";
 
 import { dummyDataOfertas } from "../../datos-mostrar/datos-ofertas";
+import { Link } from "react-router-dom";
+import { urlPaths } from "../../navigation/url-paths";
 
 function ListingsTable(props) {
   const table = dummyDataOfertas.map((item, index) => {
     return (
-      <div className={styles["row"]} key={index}>
-        <div>{item.companyName}</div>
-        <div>{item.position}</div>
+      <Link
+        to={`${urlPaths.information}/${item.id}`}
+        className={styles["row"]}
+        key={index}
+      >
+        <div className={styles["company-name"]}>{item.companyName}</div>
+        <div className={styles["position"]}>{item.position}</div>
         {props.children}
-      </div>
+      </Link>
     );
   });
+
   return <div className={styles["table"]}>{table}</div>;
 }
 export { ListingsTable };
