@@ -1,0 +1,33 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  // gap: 10px;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+
+    > div {
+      padding: 20px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: left;
+      align-content: center;
+      flex-wrap: wrap;
+      transition: all 0.3s ease-in-out;
+    }
+    .company-name {
+      background-color: #bd2d2d6b;
+      &:hover {
+        background-color: #2453b96b;
+      }
+    }
+    .position {
+      width: 100%;
+      background-color: #24b98c6b;
+      &:hover {
+        background-color: #a3b9246b;
+      }
+    }
+  }
+}
