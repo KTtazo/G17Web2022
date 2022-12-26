@@ -14,8 +14,7 @@ public class BaseDatos {
     
     private static BaseDatos instancia; //Patron Singleton
     
-    private BaseDatos(){ 
-    }
+    private BaseDatos(){}
     
     public static BaseDatos getInstancia(){
         if (instancia == null){
@@ -24,7 +23,7 @@ public class BaseDatos {
         return instancia;
     }
     
-    public Connection getConnection() {
+    public void abrirConexion() {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/gestionPracticas?useTimezone=true&serverTimezone=Europe/Madrid";
         String user = "root";
@@ -32,7 +31,6 @@ public class BaseDatos {
         System.out.println("Entramos a conectar con la BBDD");
         if (connection != null) {
             System.out.println("Ya hay una conexion");
-            return connection;
         } else {
             try {
                 System.out.println("Creamos una nueva conexion");
@@ -46,8 +44,6 @@ public class BaseDatos {
             } catch (Exception e) {
                 System.out.println("Error general DB: " + e);
             }
-
-            return connection;
         }
     }
     
