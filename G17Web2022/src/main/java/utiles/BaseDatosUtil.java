@@ -11,14 +11,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import modelos.Persona;
 
+/**
+ * Define objetos y metodos necesarios para crear una conexion e interactuar con una base de datos mysql
+ * @author Daniel Pastor Miguel
+ */
+
 public class BaseDatosUtil {
 
     private Connection conexion;
     private Statement statement;
-    PreparedStatement ps;
+    private PreparedStatement ps;
     private ResultSet rs;
 
-    private static BaseDatosUtil instancia; //Patron Singleton
+    /**
+     * Atributo que referencia una base de datos para la implementacion del patron singleton
+     */
+    private static BaseDatosUtil instancia;
 
     private BaseDatosUtil() {
     }
@@ -30,6 +38,11 @@ public class BaseDatosUtil {
         return instancia;
     }
 
+    /**
+     * Abre una conexion con una base de datos mysql en localhost:3306 y credenciales root:root
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public void abrirConexion() throws ClassNotFoundException, SQLException {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/gestionPracticas?useTimezone=true&serverTimezone=Europe/Madrid";
@@ -46,10 +59,20 @@ public class BaseDatosUtil {
         }
     }
 
+    /**
+     * Cierra una conexion
+     * @throws SQLException 
+     */
     public void cerrarConexion() throws SQLException {
         conexion.close();
     }
 
+    /**
+     * Cambia la contrasena de un objeto tipo Persona en una base de datos
+     * @param persona
+     * @param contrasena
+     * @throws Exception 
+     */
     public void cambiarContrasena(Persona persona, String contrasena) throws Exception {
         if (persona == null) {
             throw new Exception("La persona no existe");
@@ -65,6 +88,12 @@ public class BaseDatosUtil {
         ps.close();
     }
 
+    /**
+     * Hashea todas las contraseñas de una base de datos
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     * @throws Exception 
+     */
     public void hashearContrasenas() throws NoSuchAlgorithmException, InvalidKeySpecException, Exception { //hashea la contraseña de todos los usuarios almacenados en la bbdd. No hashear contraseñas que ya esten hasheadas o se pierde la contraseña original.
         ArrayList<Persona> users;
         users = getAllUsers();
@@ -77,6 +106,11 @@ public class BaseDatosUtil {
         }
     }
 
+    /**
+     * Devuelve todos los objetos tipo Persona de una base de datos
+     * @return
+     * @throws SQLException 
+     */
     public java.util.ArrayList<modelos.Persona> getAllUsers() throws SQLException {
         ArrayList<modelos.Persona> users = new java.util.ArrayList();
         String nif;
