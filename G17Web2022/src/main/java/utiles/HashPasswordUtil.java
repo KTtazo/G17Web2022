@@ -42,7 +42,7 @@ public class HashPasswordUtil {
     }
 
     public static boolean validarPassword(String decodedPassword, String hashedPassword)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
+            throws NoSuchAlgorithmException, InvalidKeySpecException { //va a lanzar NumberFormatException si metes como hashedPasssword una contraseña que no esta hasheada (las hashes son solo numeros, no pueden tener letras). Por lo que si hay alguna contrasena en la bbdd que no este hasheada y tenga letras, va a devolver la excepcion.
         String[] parts = hashedPassword.split(":");
         int iterations = Integer.parseInt(parts[0]);
 

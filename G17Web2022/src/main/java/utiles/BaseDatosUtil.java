@@ -65,7 +65,7 @@ public class BaseDatosUtil {
         ps.close();
     }
 
-    public void hashearContrasenas() throws NoSuchAlgorithmException, InvalidKeySpecException, Exception { //hashea la contraseña de todos los usuarios almacenados en la bbdd
+    public void hashearContrasenas() throws NoSuchAlgorithmException, InvalidKeySpecException, Exception { //hashea la contraseña de todos los usuarios almacenados en la bbdd. No hashear contraseñas que ya esten hasheadas o se pierde la contraseña original.
         ArrayList<Persona> users;
         users = getAllUsers();
 
