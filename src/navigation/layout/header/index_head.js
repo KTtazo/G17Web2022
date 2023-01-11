@@ -30,7 +30,7 @@ function Header() {
       {isLoggedIn && (
         <div className={styles["right-section"]}>
           <Link className={styles["item"]} onClick={onLogout}>
-            Log Out
+            Cerrar sesión
           </Link>
         </div>
       )}
