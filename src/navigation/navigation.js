@@ -7,7 +7,7 @@ import { InicioTutor } from "../pages/inicio-tutor/index_it";
 import { Login } from "../pages/login";
 import { Register } from "../pages/register";
 import { urlPaths } from "./url-paths";
-import { DatosGenerales } from "../pages/datos-generales/index_dg";
+import { NotFound } from "../components/not-found";
 
 function Navigation() {
   return (
@@ -17,13 +17,12 @@ function Navigation() {
       <Route path={urlPaths.register} element={<Register />} />
       <Route path={urlPaths.inicioAlumno} element={<InicioAlumno />} />
       <Route path={urlPaths.inicioTutor} element={<InicioTutor />} />
-      <Route path={urlPaths.datosGenerales} element={<DatosGenerales/>}/>
       <Route
         path={urlPaths.inicioResponsable}
         element={<InicioResponsable />}
       />
       <Route path={`${urlPaths.information}/:id`} element={<Information />} />
-      
+      <Route path={`*`} element={<NotFound />} />
     </Routes>
   );
 }

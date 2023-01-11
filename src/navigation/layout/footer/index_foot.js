@@ -3,7 +3,37 @@ import { urlPaths } from "../../url-paths";
 import styles from "./style.module.scss";
 function Footer() {
   return (
-    <footer className={styles["header"]}>
+    <footer className={styles["footer"]}>
+      <div className={styles["footer-section"]}>
+        <div className={styles["title"]}>Enlaces importantes</div>
+        <Link className={styles["item"]} to={urlPaths.login}>
+          Login
+        </Link>{" "}
+        {/* <a
+          href={"http://localhost:3000/login"} /////link here
+          target={"_blank"}
+          className={styles["item"]}
+        ></a> */}
+        <a
+          href={
+            "https://docs.google.com/document/d/1ZI-opdvpKlcesdfKXx0cXPMNkE-WHfpoTZErSlQWUGc/edit"
+          } /////link here
+          target={"_blank"}
+          className={styles["item"]}
+        >
+          Documentación del trabajo
+        </a>
+      </div>
+      <div className={styles["footer-section"]}>
+        <div className={styles["title"]}>Trabajo realizado por</div>
+        <div className={styles["item"]}>Diego Fernández Rueda</div>
+        <div className={styles["item"]}>Elena Martin Naranjo</div>
+        <div className={styles["item"]}>David Soler Vicén</div>
+        <div className={styles["item"]}>Enrique Gutiérrez Velasco</div>
+        <div className={styles["item"]}>Daniel Pastor Miguel</div>
+      </div>
+
+      {/*       
         <Link className={styles["item"]} to={urlPaths.login}>
           Login
         </Link>
@@ -24,7 +54,7 @@ function Footer() {
         </Link>
         <Link className={styles["item"]} to={`${urlPaths.datosPractica}/`}>
           Datos de Practicas{" "}
-        </Link>
+        </Link> */}
     </footer>
   );
 }

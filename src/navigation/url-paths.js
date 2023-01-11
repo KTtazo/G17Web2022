@@ -9,7 +9,6 @@ export const urlPaths = {
   inicioTutor: "/inicioTut",
   datosPractica: "/datosPrac",
   information: "/information",
-  datosGenerales: "/datosGen",
 };
 
 
