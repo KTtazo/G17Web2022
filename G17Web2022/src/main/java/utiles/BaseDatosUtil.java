@@ -200,11 +200,11 @@ public class BaseDatosUtil {
         return true;
     }
 
-    public boolean registrarTutor(String nombreUsuario, String contrasena, String nif, String empresaCif, String cargo) throws SQLException {
+    public boolean registrarTutor(String nombreUsuario, String contrasena, String nif, String empresaCif, String cargo) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         String consulta = "INSERT INTO Persona (`usuario`, `contrasena`, `nif`) VALUES (?, ?, ?)";
         ps = conexion.prepareStatement(consulta);
         ps.setString(1, nombreUsuario);
-        ps.setString(2, contrasena);
+        ps.setString(2, HashPasswordUtil.generarPasswordHash(contrasena));
         ps.setString(3, nif);
         try {
             ps.executeUpdate();
