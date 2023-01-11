@@ -2,7 +2,10 @@ package controladores;
 
 import utiles.BaseDatosUtil;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
+import modelos.OfertaPracticas;
 import modelos.Persona;
 
 public class NewMain {
@@ -12,7 +15,6 @@ public class NewMain {
         BaseDatosUtil bd = BaseDatosUtil.getInstancia();
         bd.abrirConexion();
         
-        //bd.hashearContrasenas();
         /*
         ArrayList<Persona> users;
         users = bd.getAllUsers();
@@ -27,6 +29,15 @@ public class NewMain {
         
         //System.out.println(bd.getUser("alba.ramos").getNif());
         //System.out.println(bd.isAlumno("alejandro.mendez"));
+        //System.out.println(bd.registrarEmpresa("prueba", "prueba", "prueba"));
+        //System.out.println(bd.registrarTutor("aaaaaa", "aaaaaa", "aaaaaa", "A54357254", "aaaaaa"));
+        //System.out.println(bd.registrarOferta("2022/2023", "", 35, Date.valueOf("2023-02-01"), new Time(1567315800000L), new Time(1567315800000L), "espanol C2, ingles B2", 2, "Participacion en torneos CTF y experiencia en pentesting en paginas como HacktheBox", 1200, "Pentesting auditoria", "A58818501", "alba.ramos"));
+        /*
+        ArrayList<OfertaPracticas> ofertasPracticas = bd.getAllOfertasPracticas();
+        for (int i=0; i<ofertasPracticas.size(); i++) {
+            System.out.println(ofertasPracticas.get(i).toString());
+        }
+        */
         
         bd.cerrarConexion();
     }

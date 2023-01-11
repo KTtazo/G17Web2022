@@ -1,5 +1,6 @@
 package modelos;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class OfertaPracticas {
@@ -9,12 +10,17 @@ public class OfertaPracticas {
     private String titulo;
     private String idiomas;
     private String requisitos;
-    private java.util.Date fechaInicio;
+    private Date fechaInicio;
     private String curso;
+    private int duracion;
+    private Time horaInicio;
+    private Time horaSalida;
+    private int plazas;
+    private int salario;
     private String Tutor_Persona_usuario;
     private String Tutor_Empresa_cif;
 
-    public OfertaPracticas(int idOfertaPracticas, String descripcion, String titulo, String idiomas, String requisitos, Date fechaInicio, String curso, String Tutor_Persona_usuario, String Tutor_Empresa_cif) {
+    public OfertaPracticas(int idOfertaPracticas, String descripcion, String titulo, String idiomas, String requisitos, Date fechaInicio, String curso, int duracion, Time horaInicio, Time horaSalida, int plazas, int salario, String Tutor_Persona_usuario, String Tutor_Empresa_cif) {
         this.idOfertaPracticas = idOfertaPracticas;
         this.descripcion = descripcion;
         this.titulo = titulo;
@@ -22,6 +28,11 @@ public class OfertaPracticas {
         this.requisitos = requisitos;
         this.fechaInicio = fechaInicio;
         this.curso = curso;
+        this.duracion = duracion;
+        this.horaInicio = horaInicio;
+        this.horaSalida = horaSalida;
+        this.plazas = plazas;
+        this.salario = salario;
         this.Tutor_Persona_usuario = Tutor_Persona_usuario;
         this.Tutor_Empresa_cif = Tutor_Empresa_cif;
     }
@@ -72,6 +83,11 @@ public class OfertaPracticas {
 
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
+    }
+
+    @Override
+    public String toString() {
+        return "OfertaPracticas{" + "idOfertaPracticas=" + idOfertaPracticas + ", descripcion=" + descripcion + ", titulo=" + titulo + ", idiomas=" + idiomas + ", requisitos=" + requisitos + ", fechaInicio=" + fechaInicio + ", curso=" + curso + ", duracion=" + duracion + ", horaInicio=" + horaInicio + ", horaSalida=" + horaSalida + ", plazas=" + plazas + ", salario=" + salario + ", Tutor_Persona_usuario=" + Tutor_Persona_usuario + ", Tutor_Empresa_cif=" + Tutor_Empresa_cif + '}';
     }
 
     public String getCurso() {
