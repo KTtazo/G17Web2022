@@ -7,9 +7,6 @@ function InicioAlumno() {
     <div>
       <ListingsTable />
       <ListingsTable />
-      <Link className={styles["item"]} to={`${urlPaths.information}/1`}>
-        Datos de Practicas{" "}
-      </Link>
     </div>
   );
 }

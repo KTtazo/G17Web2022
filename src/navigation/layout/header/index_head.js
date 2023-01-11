@@ -24,6 +24,9 @@ function Header() {
             <Link className={styles["item"]} to={urlPaths.inicioAlumno}>
               Inicio
             </Link>
+            <Link className={styles["item"]} to={urlPaths.nuevaOferta}>
+              NuevaOferta
+            </Link>
           </>
         )}
       </div>

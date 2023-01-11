@@ -8,6 +8,7 @@ import { Login } from "../pages/login";
 import { Register } from "../pages/register";
 import { urlPaths } from "./url-paths";
 import { NotFound } from "../components/not-found";
+import { NuevaOferta } from "../pages/nueva-oferta/index_no";
 
 function Navigation() {
   return (
@@ -21,8 +22,10 @@ function Navigation() {
         path={urlPaths.inicioResponsable}
         element={<InicioResponsable />}
       />
+      <Route path={urlPaths.nuevaOferta} element={<NuevaOferta />} />
       <Route path={`${urlPaths.information}/:id`} element={<Information />} />
       <Route path={`*`} element={<NotFound />} />
+      <Route path={`${urlPaths.alumnosAceptados}/:id`} element={<alumnosAceptados />} />
     </Routes>
   );
 }

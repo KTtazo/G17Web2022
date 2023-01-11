@@ -1,0 +1,8 @@
+.oferta-info-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  .button {
+    width: fit-content;
+  }
+}

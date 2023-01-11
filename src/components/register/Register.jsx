@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
+import { Button } from "../button/button";
 import { TextInput } from "../text-input";
 import styles from "./style.module.scss";
 
@@ -43,7 +44,7 @@ export const RegisterForm = (props) => {
           onChange={(e) => setPass(e.target.value)}
         />
 
-        <button type="submit">Registrar</button>
+        <Button type="submit" onButtonClick={handleSubmit}>Registrar</Button>
       </form>
     </div>
   );
