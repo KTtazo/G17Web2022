@@ -19,6 +19,9 @@ export const RegisterForm = (props) => {
   return (
     <div className={styles["auth-form"]}>
       <form className={styles["register-form"]} onSubmit={handleSubmit}>
+        <h1>
+          Registro de tutor
+        </h1>
         <TextInput
           labelFor={"nombre"}
           name={"Nombre"}
@@ -44,7 +47,9 @@ export const RegisterForm = (props) => {
           onChange={(e) => setPass(e.target.value)}
         />
 
-        <Button type="submit" onButtonClick={handleSubmit}>Registrar</Button>
+        <Button type="submit" onButtonClick={handleSubmit}>
+          Registrar
+        </Button>
       </form>
     </div>
   );
