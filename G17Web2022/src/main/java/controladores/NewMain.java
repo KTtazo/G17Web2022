@@ -13,7 +13,7 @@ public class NewMain {
         bd.abrirConexion();
         
         //bd.hashearContrasenas();
-        
+        /*
         ArrayList<Persona> users;
         users = bd.getAllUsers();
         for (int i=0; i<users.size(); i++){
@@ -23,6 +23,10 @@ public class NewMain {
             System.out.println(utiles.HashPasswordUtil.validarPassword("admin", user.getContrasena()));
             System.out.println("------------------------------");
         }
+        */
+        
+        //System.out.println(bd.getUser("alba.ramos").getNif());
+        //System.out.println(bd.isAlumno("alejandro.mendez"));
         
         bd.cerrarConexion();
     }

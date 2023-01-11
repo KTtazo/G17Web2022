@@ -6,6 +6,8 @@ public class Persona {
     private String usuario;
     private String contrasena;
 
+    public Persona(){}
+    
     public Persona(String nif, String usuario, String contrasena) {
         this.nif = nif;
         this.usuario = usuario;
