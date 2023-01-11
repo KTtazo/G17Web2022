@@ -28,6 +28,14 @@ function InicioTutor() {
         >
           Registro de nuevo tutor
         </Button>
+        <Button
+          onButtonClick={() => {
+            navigate(urlPaths.informeTutor);
+          }}
+          className={styles["button"]}
+        >
+          Generar informe sobre alumno
+        </Button>
       </div>
     </div>
   );
