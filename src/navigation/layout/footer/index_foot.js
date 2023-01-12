@@ -14,15 +14,14 @@ function Footer() {
           target={"_blank"}
           className={styles["item"]}
         ></a> */}
-        <a
+        {/* <a
           href={
             "https://docs.google.com/document/d/1ZI-opdvpKlcesdfKXx0cXPMNkE-WHfpoTZErSlQWUGc/edit"
           } /////link here
           target={"_blank"}
           className={styles["item"]}
-        >
-          Documentación del trabajo
-        </a>
+        > */}
+        <Link to={urlPaths.documentacion}>Documentación del trabajo</Link>
       </div>
       <div className={styles["footer-section"]}>
         <div className={styles["title"]}>Trabajo realizado por</div>

@@ -10,12 +10,7 @@ export const urlPaths = {
   datosPractica: "/datosPrac",
   information: "/information",
   nuevaOferta: "/nuevaOferta",
-  alumnosAceptados:"/alumnosAceptados",
-  informeTutor:"/informeTutor"
+  alumnosAceptados: "/alumnosAceptados",
+  informeTutor: "/informeTutor",
+  documentacion: "/documentacion",
 };
-
-
-
-
-
-

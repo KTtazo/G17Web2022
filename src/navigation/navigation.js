@@ -10,6 +10,7 @@ import { urlPaths } from "./url-paths";
 import { NotFound } from "../components/not-found";
 import { NuevaOferta } from "../pages/nueva-oferta/index_no";
 import { InformeTutor } from "../pages/informe-tutor/index_no";
+import { Documentacion } from "../pages/documentacion";
 //import {} from "../pages/alumnos-aceptados/index_no" --<Route path={`${urlPaths.alumnosAceptados}/:id`} element={<alumnosAceptados />} />
 
 function Navigation() {
@@ -27,6 +28,7 @@ function Navigation() {
       />
       <Route path={urlPaths.nuevaOferta} element={<NuevaOferta />} />
       <Route path={`${urlPaths.information}/:id`} element={<Information />} />
+      <Route path={urlPaths.documentacion} element={<Documentacion/>}/>
       <Route path={`*`} element={<NotFound />} />
     </Routes>
   );
