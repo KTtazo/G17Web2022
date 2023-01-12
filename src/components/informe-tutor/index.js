@@ -12,6 +12,31 @@ function InformeTutorForm() {
     console.log(alumno);
     console.log(nota);
     console.log(info);
+    
+    const requestBody = {
+      alumno: alumno,
+      nota: nota,
+      info: info
+    };
+
+    fetch("http://localhost:8080/urlServlet", {                                 //HAY QUE PONER LA URL DEL SERVLET
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "post",
+      body: JSON.stringify(requestBody),
+    })
+
+    .then((response) => {
+      if(response.status === 200) {
+        console.log("----Insert succesfull----");
+      }else
+        console.log("----Insert failed----");
+    })
+    .catch((message) => { 
+      alert(message);
+      console.log("----Insert failed----");
+    });
   };
   return (
     <div className={styles["nueva-oferta-container"]}>
