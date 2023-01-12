@@ -215,7 +215,7 @@ public class BaseDatosUtil {
             ps.close();
             return false;
         }
-        NewMain.logBBDD.log(Level.INFO ,"Registra empresa con nombre "+nombre +" insertada" );
+        NewMain.logBBDD.log(Level.INFO ,"Empresa con nombre "+nombre +" insertada" );
         ps.close();
         return true;
     }
@@ -248,7 +248,7 @@ public class BaseDatosUtil {
             NewMain.logBBDD.log(Level.WARNING ,"Error al registrar tutor" );
             return false;
         }
-        NewMain.logBBDD.log(Level.INFO ,"Registra tutor con nombre "+nombreUsuario +" insertada" );
+        NewMain.logBBDD.log(Level.INFO ,"Tutor con nombre "+nombreUsuario +" insertado" );
         ps.close();
         return true;
     }
