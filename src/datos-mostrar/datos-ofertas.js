@@ -1,34 +1,22 @@
-export const dummyDataOfertas = [
-  {
-    companyName: "Compañía 1",
-    position:
-      "Posicion posicion posicion posicion posicion texto",
-    info: "Informacion",
-    id: 1,
-  },
+import React, {useState, useEffect} from "react";
 
-  {
-    companyName: "Compañía 2",
-    position: "Posición 2",
-    info: "Informacion",
-    id: 2,
-  },
-  {
-    companyName: "Compañía 3",
-    position: "Posición 3",
-    info: "Informacion",
-    id: 3,
-  },
-  {
-    companyName: "Compañía 4",
-    position: "Posición 4",
-    info: "Informacion4",
-    id: 4,
-  },
-  {
-    companyName: "Compañía 5",
-    position: "Posición 5",
-    info: "Informacion",
-    id: 5,
-  },
-];
+function DatosOfertas() {
+
+  const [ofertas, setOfertas] = useState([])
+
+  const obtenerOfertas = async() => {
+    const response = await fetch("https://gorest.co.in/public/v2/users")     //DATOS DE PRUEBA, HAY QUE PONER LA URL DEL SERVLET
+    const dataOfertas = await response.json()
+    setOfertas(dataOfertas)
+  }
+
+  useEffect( () => {
+    obtenerOfertas()
+  }, [])
+
+  return ofertas
+}
+
+export {DatosOfertas};
+
+
