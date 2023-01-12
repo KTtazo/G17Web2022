@@ -312,4 +312,190 @@ public class BaseDatosUtil {
         statement.close();
         return users;
     }
+          ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public boolean registrarSeleccion(String alumno_iniciado,int id_seleccionado,int prioridad_seleccionada) throws SQLException {
+        String consulta = "INSERT INTO oferta_practicas_has_alumno (`OfertaPracticas_idOfertaPracticas`, `Alumno_Persona_Usuario`, `prioridad`) VALUES (?, ?, ?)";
+        ps = conexion.prepareStatement(consulta);
+        ps.setInt(1,id_seleccionado );
+        ps.setString(2, alumno_iniciado);
+        ps.setInt(3, prioridad_seleccionada);
+        try {
+            ps.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            ps.close();
+            return false;
+        }
+        ps.close();
+        return true;
+    }
+        ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public ArrayList<OfertaPracticas_has_Alumno> getAllSelecciones() throws SQLException {
+        ArrayList<OfertaPracticas_has_Alumno> ofertaPracticas_has_Alumno = new ArrayList();
+
+        statement = conexion.createStatement();
+        rs = statement.executeQuery("SELECT * FROM oferta_practicas_has_alumno ");
+        while (rs.next()) {
+            ofertaPracticas_has_Alumno.add(
+                new OfertaPracticas_has_Alumno(
+                    rs.getInt("OfertaPracticas_idOfertaPracticas"),
+                    rs.getString("Alumno_Persona_Usuario"),
+                    rs.getInt("prioridad")   
+                )
+            )      
+            ;
+        }
+        rs.close();
+        statement.close();
+        return ofertaPracticas_has_Alumno;
+    }   
+     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public void asignaPractica() throws SQLException{
+        String nombreAlumno= alumnoMejorCalificado();
+        int id_oferta= elegirPorPrioridad(alumnoMejorCalificado());
+        if(existenPlazas() ){
+          String consulta = "UPDATE Alumno SET oferta_practicas_id_oferta_practicas =? "
+                + "         WHERE persona_usuario=?";
+        ps = conexion.prepareStatement(consulta);
+        ps.setInt(1, id_oferta);
+        ps.setString(2, nombreAlumno);
+       
+         
+        ps.executeUpdate();
+        ps.close();  
+        }
+      
+    }
+     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public boolean existenPlazas() throws SQLException{
+        int id_oferta= elegirPorPrioridad(alumnoMejorCalificado());
+        int plazas;
+        statement = conexion.createStatement();
+        String consulta= ("SELECT plazas FROM oferta_practicas WHERE if_oferta_practicas=? ");
+        ps = conexion.prepareStatement(consulta);
+        ps.setInt(1, id_oferta);
+        rs = ps.executeQuery();
+        plazas= rs.getInt(1);
+        rs.close();
+        ps.close();
+                if(plazas>1){
+                    String consulta2= "UPDATE oferta_practicas SET plazas=plazas-1"
+                            + "WHERE id_oferta_practicas= ?";
+                      ps = conexion.prepareStatement(consulta2);
+                      ps.setInt(1, id_oferta);
+                      ps.executeUpdate();
+                      ps.close();
+                      return true;
+                }else if(plazas==1){                
+                      String consulta2= "DELETE FROM oferta_practicas "
+                            + "WHERE id_oferta_practicas= ?";
+                      ps = conexion.prepareStatement(consulta2);
+                      ps.setInt(1, id_oferta);
+                      ps.executeUpdate();
+                      ps.close();
+                      return true;
+                }else{
+                    return false;
+                }
+        
+    }
+     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public String alumnoMejorCalificado() throws SQLException{
+         
+        statement = conexion.createStatement();
+        rs = statement.executeQuery("SELECT persona_usuario "
+                                        +"FROM Alumno "
+                                        +"WHERE nota_media= (SELECT MAX(nota_media) FROM Alumno"
+                + "                     INNER JOIN Oferta_Practicas_has_Alumno"
+                + "                     ON persona_usuario= alumno_persona_usuario )");
+            String mejorAlumno = rs.getString(1);
+            return mejorAlumno;
+        
+    }
+     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public int elegirPorPrioridad(String nombreAlumno) throws SQLException{
+        nombreAlumno= alumnoMejorCalificado();
+        String consulta = "select oferta_practicas_id_oferta_practicas" +
+                            "FROM oferta_practicas_has_alumno" +
+                            "WHERE alumno_persona_usuario=?"+
+                            "ORDER BY prioridad DESC" ;
+        ps = conexion.prepareStatement(consulta);
+        ps.setString(1, nombreAlumno);
+        statement = conexion.createStatement();
+        rs = ps.executeQuery();
+        int ofertaSeleccionada = rs.getInt(1);
+        return ofertaSeleccionada;
+    }
+     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public int NumeroTotalAlumnos() throws SQLException{
+      
+        statement = conexion.createStatement();
+        rs = statement.executeQuery("SELECT count(*)"
+                                        +"FROM Alumno ");
+            int total = rs.getInt(1);
+           return total;
+    }
+     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public List NumeroTotalAlumnosPorEmpresa() throws SQLException{
+      List<Object> empresaRecuento = new ArrayList<Object>();
+        statement = conexion.createStatement();
+        rs = statement.executeQuery("SELECT Empresa.nombre, COUNT(*) " +
+                            "FROM Alumno " +
+                            "INNER JOIN oferta_practicas " +
+                            "on Alumno.oferta_practicas_id_oferta_practicas= oferta_practicas.id_oferta_practicas " +
+                            "INNER JOIN Empresa " +
+                            "on oferta_practicas.tutor_Empresa_cif= Empresa.cif " +
+                            "GROUP BY Empresa.nombre");
+    
+               return empresaRecuento;
+      
+           
+    }
+     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+   public boolean registrarInforme(String comentarios,double nota,String Tutor_Persona_usuario ,String Tutor_Empresa_cif,String Alumno_Persona_usuario ) throws SQLException {
+        String consulta = "INSERT INTO InformePracticas (`comentarios`, `nota`, `Tutor_Persona_usuario`, `Tutor_Empresa_cif`, `Alumno_Persona_usuario` ) "
+                + " VALUES (?, ?, ? , ? , ? )";
+        ps = conexion.prepareStatement(consulta);
+        ps.setString(2, comentarios);
+        ps.setDouble(1,nota );
+        ps.setString(2, Tutor_Persona_usuario);
+        ps.setString(2, Tutor_Empresa_cif);
+        ps.setString(2, Alumno_Persona_usuario);
+        try {
+            ps.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            ps.close();
+            return false;
+        }
+        ps.close();
+        return true;
+    }
+    ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public void generaInformeGlobal() throws FileNotFoundException, SQLException, IOException{
+        ArrayList<InformePracticas> informe = new ArrayList();
+        File csvFile = new File("//Documentos/InformeGeneral.csv");
+        PrintWriter out = new PrintWriter(csvFile);
+        statement = conexion.createStatement();
+        rs = statement.executeQuery("SELECT * FROM InformePracticas");
+        while (rs.next()) {
+            informe.add(
+                new InformePracticas(
+                    rs.getString("comentarios"),
+                    rs.getDouble("nota"),
+                    rs.getString("Tutor_Persona_usuario"),
+                    rs.getString("Tutor_Empresa_cif"),
+                    rs.getString("Alumno_Persona_usuario")
+                    )
+            );
+        }
+        for(InformePracticas informePracticas: informe){
+            out.printf(informePracticas.getAlumno_Persona_usuario(), 
+                    informePracticas.getComentarios(),
+                    informePracticas.getNota(),
+                    informePracticas.getTutor_Empresa_cif(),
+                    informePracticas.getTutor_Persona_usuario());
+        }
+        out.close();
+        rs.close();
+        statement.close();
+    }   
 }
