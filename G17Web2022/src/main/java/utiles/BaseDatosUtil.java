@@ -1,5 +1,10 @@
 package utiles;
 
+import controladores.NewMain;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
@@ -12,7 +17,11 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import modelos.InformePracticas;
 import modelos.OfertaPracticas;
+import modelos.OfertaPracticas_has_Alumno;
 import modelos.Persona;
 
 /**
@@ -31,6 +40,7 @@ public class BaseDatosUtil {
      * Atributo que referencia una base de datos para la implementacion del patron singleton
      */
     private static BaseDatosUtil instancia;
+    
 
     private BaseDatosUtil() {
     }
@@ -61,6 +71,7 @@ public class BaseDatosUtil {
             Class.forName(driver);
             conexion = DriverManager.getConnection(url, user, password);
             System.out.println("Finalizamos config db");
+             NewMain.logBBDD.log(Level.INFO ,"Conexion con BBDD establecida" );
         }
     }
 
@@ -71,6 +82,7 @@ public class BaseDatosUtil {
      */
     public void cerrarConexion() throws SQLException {
         conexion.close();
+
     }
 
     /**
@@ -82,7 +94,9 @@ public class BaseDatosUtil {
      */
     public void cambiarContrasena(Persona persona, String contrasena) throws Exception {
         if (persona == null) {
+            NewMain.logBBDD.log(Level.WARNING ,"El usuario "+persona.getUsuario()+" no existe" );
             throw new Exception("La persona no existe");
+       
         }
         persona.setContrasena(HashPasswordUtil.generarPasswordHash(contrasena));
         String consulta = "update Persona set contrasena = ? where usuario = ?";
@@ -90,6 +104,7 @@ public class BaseDatosUtil {
         ps.setString(1, persona.getContrasena());
         ps.setString(2, persona.getUsuario());
         ps.executeUpdate();
+       NewMain.logBBDD.log(Level.INFO ,"Contrasena de usuario "+persona.getUsuario()+" cambiada" );
         ps.close();
     }
 
@@ -121,14 +136,18 @@ public class BaseDatosUtil {
         while (rs.next()) {
             user = new Persona(rs.getString("nif"), rs.getString("usuario"), rs.getString("contrasena"));
         }
+        NewMain.logBBDD.log(Level.INFO ,"Consulta si el usuario "+nombre +" existe" );
         rs.close();
         ps.close();
         return user;
+        
     }
 
     public boolean login(String nombreUsuario, String contrasena) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Persona usuario = getUser(nombreUsuario);
+        NewMain.logBBDD.log(Level.INFO ,"Consulta si el usuario "+nombreUsuario +" y su contrsena coinciden" );
         return HashPasswordUtil.validarPassword(contrasena, usuario.getContrasena());
+        
     }
 
     public boolean isAlumno(String nombreUsuario) throws SQLException {
@@ -196,15 +215,16 @@ public class BaseDatosUtil {
             ps.close();
             return false;
         }
+        NewMain.logBBDD.log(Level.INFO ,"Registra empresa con nombre "+nombre +" insertada" );
         ps.close();
         return true;
     }
 
-    public boolean registrarTutor(String nombreUsuario, String contrasena, String nif, String empresaCif, String cargo) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public boolean registrarTutor(String nombreUsuario, String contrasena, String nif, String empresaCif, String cargo) throws SQLException {
         String consulta = "INSERT INTO Persona (`usuario`, `contrasena`, `nif`) VALUES (?, ?, ?)";
         ps = conexion.prepareStatement(consulta);
         ps.setString(1, nombreUsuario);
-        ps.setString(2, HashPasswordUtil.generarPasswordHash(contrasena));
+        ps.setString(2, contrasena);
         ps.setString(3, nif);
         try {
             ps.executeUpdate();
@@ -225,8 +245,10 @@ public class BaseDatosUtil {
             ps.setString(1, nombreUsuario);
             ps.executeUpdate();
             ps.close();
+            NewMain.logBBDD.log(Level.WARNING ,"Error al registrar tutor" );
             return false;
         }
+        NewMain.logBBDD.log(Level.INFO ,"Registra tutor con nombre "+nombreUsuario +" insertada" );
         ps.close();
         return true;
     }
@@ -252,11 +274,15 @@ public class BaseDatosUtil {
             ps.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException ex) {
             ps.close();
+            NewMain.logBBDD.log(Level.WARNING ,"Error al registrar oferta" );
             return false;
+            
         }
+        NewMain.logBBDD.log(Level.INFO ,"Nueva oferta de practicas creada" );
         ps.close();
         return true;
     }
+  
 
     public ArrayList<OfertaPracticas> getAllOfertasPracticas() throws SQLException {
         ArrayList<OfertaPracticas> ofertasPracticas = new ArrayList();
@@ -283,6 +309,7 @@ public class BaseDatosUtil {
                     )
             );
         }
+        NewMain.logBBDD.log(Level.INFO ,"Muestra todas las ofertas de practicas" );
         rs.close();
         statement.close();
         return ofertasPracticas;
@@ -308,11 +335,12 @@ public class BaseDatosUtil {
             contrasena = rs.getString("contrasena");
             users.add(new modelos.Persona(nif, usuario, contrasena));
         }
+        NewMain.logBBDD.log(Level.INFO ,"Muestra todos los usuarios" );
         rs.close();
         statement.close();
         return users;
     }
-          ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+       ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
     public boolean registrarSeleccion(String alumno_iniciado,int id_seleccionado,int prioridad_seleccionada) throws SQLException {
         String consulta = "INSERT INTO oferta_practicas_has_alumno (`OfertaPracticas_idOfertaPracticas`, `Alumno_Persona_Usuario`, `prioridad`) VALUES (?, ?, ?)";
         ps = conexion.prepareStatement(consulta);
@@ -323,8 +351,10 @@ public class BaseDatosUtil {
             ps.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException ex) {
             ps.close();
+            NewMain.logBBDD.log(Level.WARNING ,"Error al registrar seleccion" );
             return false;
         }
+        NewMain.logBBDD.log(Level.INFO ,"Regista seleccion de "+alumno_iniciado +" a oferta con id "+ id_seleccionado);
         ps.close();
         return true;
     }
@@ -344,11 +374,20 @@ public class BaseDatosUtil {
             )      
             ;
         }
+        NewMain.logBBDD.log(Level.INFO ,"Muestra todos las selecciones de Ofertas de practicas");
         rs.close();
         statement.close();
         return ofertaPracticas_has_Alumno;
     }   
-     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    public void asignarTodasPracitcas() throws SQLException{
+       statement = conexion.createStatement();
+        rs = statement.executeQuery("SELECT * FROM oferta_practicas_has_alumno");
+        while (rs.next()) {
+            asignaPractica();
+        }
+        NewMain.logBBDD.log(Level.INFO ,"Practicas asignadas a los alumno");
+        rs.close();
+    }
     public void asignaPractica() throws SQLException{
         String nombreAlumno= alumnoMejorCalificado();
         int id_oferta= elegirPorPrioridad(alumnoMejorCalificado());
@@ -358,14 +397,12 @@ public class BaseDatosUtil {
         ps = conexion.prepareStatement(consulta);
         ps.setInt(1, id_oferta);
         ps.setString(2, nombreAlumno);
-       
-         
+        
         ps.executeUpdate();
         ps.close();  
         }
       
     }
-     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
     public boolean existenPlazas() throws SQLException{
         int id_oferta= elegirPorPrioridad(alumnoMejorCalificado());
         int plazas;
@@ -394,11 +431,18 @@ public class BaseDatosUtil {
                       ps.close();
                       return true;
                 }else{
+                    String consulta2= "DELETE FROM oferta_practicas "
+                            + "WHERE id_oferta_practicas= ?";
+                    ps = conexion.prepareStatement(consulta2);
+                      ps.setInt(1, id_oferta);
+                      ps.executeUpdate();
+                      NewMain.logBBDD.log(Level.WARNING ,"Oferta: "+id_oferta+"con menos de 1 plaza");
+                      ps.close();
                     return false;
                 }
         
     }
-     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+    
     public String alumnoMejorCalificado() throws SQLException{
          
         statement = conexion.createStatement();
@@ -411,7 +455,6 @@ public class BaseDatosUtil {
             return mejorAlumno;
         
     }
-     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
     public int elegirPorPrioridad(String nombreAlumno) throws SQLException{
         nombreAlumno= alumnoMejorCalificado();
         String consulta = "select oferta_practicas_id_oferta_practicas" +
@@ -425,16 +468,16 @@ public class BaseDatosUtil {
         int ofertaSeleccionada = rs.getInt(1);
         return ofertaSeleccionada;
     }
-     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
     public int NumeroTotalAlumnos() throws SQLException{
       
         statement = conexion.createStatement();
         rs = statement.executeQuery("SELECT count(*)"
                                         +"FROM Alumno ");
             int total = rs.getInt(1);
+            NewMain.logBBDD.log(Level.INFO ,"Muestra numero total de alumnos");
            return total;
+            
     }
-     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
     public List NumeroTotalAlumnosPorEmpresa() throws SQLException{
       List<Object> empresaRecuento = new ArrayList<Object>();
         statement = conexion.createStatement();
@@ -445,12 +488,11 @@ public class BaseDatosUtil {
                             "INNER JOIN Empresa " +
                             "on oferta_practicas.tutor_Empresa_cif= Empresa.cif " +
                             "GROUP BY Empresa.nombre");
-    
+        NewMain.logBBDD.log(Level.INFO ,"Muestra numero total de alumnos por empresa");                    
                return empresaRecuento;
       
            
     }
-     ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
    public boolean registrarInforme(String comentarios,double nota,String Tutor_Persona_usuario ,String Tutor_Empresa_cif,String Alumno_Persona_usuario ) throws SQLException {
         String consulta = "INSERT INTO InformePracticas (`comentarios`, `nota`, `Tutor_Persona_usuario`, `Tutor_Empresa_cif`, `Alumno_Persona_usuario` ) "
                 + " VALUES (?, ?, ? , ? , ? )";
@@ -467,9 +509,11 @@ public class BaseDatosUtil {
             return false;
         }
         ps.close();
+        NewMain.logBBDD.log(Level.INFO ,"Informe de alumno: "+ Alumno_Persona_usuario+" creado" );
         return true;
+        
     }
-    ///COMPROBAR!!!!!!!!!!!!!!!!!!!!!!
+   
     public void generaInformeGlobal() throws FileNotFoundException, SQLException, IOException{
         ArrayList<InformePracticas> informe = new ArrayList();
         File csvFile = new File("//Documentos/InformeGeneral.csv");
@@ -494,8 +538,9 @@ public class BaseDatosUtil {
                     informePracticas.getTutor_Empresa_cif(),
                     informePracticas.getTutor_Persona_usuario());
         }
+         NewMain.logBBDD.log(Level.INFO ,"Acceso a todos los informes" );
         out.close();
         rs.close();
         statement.close();
-    }   
+    }      
 }
