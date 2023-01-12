@@ -1,9 +1,17 @@
-import styles from './style.module.scss'
-function TextInput({ labelFor, name, value, type, placeholder, onChange }) {
-
+import classNames from "classnames";
+import styles from "./style.module.scss";
+function TextInput({
+  labelFor,
+  name,
+  value,
+  type,
+  placeholder,
+  onChange,
+  className
+}) {
   return (
-    <div className={styles['text-input-container']}>
-      <label htmlFor={labelFor}>{name}</label>
+    <div className={classNames(styles["text-input-container"], className)}>
+      {name && <label htmlFor={labelFor}>{name}</label>}
       <input
         value={value}
         onChange={onChange}

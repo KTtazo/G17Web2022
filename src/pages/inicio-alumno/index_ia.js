@@ -1,8 +1,19 @@
 import { ListingsTable } from "../../components/table-of-listings";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { urlPaths } from "../../navigation/url-paths";
-import styles from "./style.module.scss";
+import { useContext, useEffect } from "react";
+import AuthContext from "../../store/auth-context";
 function InicioAlumno() {
+  const { isLoggedIn } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate(urlPaths.home);
+    }
+  }, [isLoggedIn]);
+
   return (
     <div>
       <ListingsTable />

@@ -1,6 +1,11 @@
 .text-input-container {
-  margin: 10px 0;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
   input {
-    padding: 5px 10px ;
+    padding: 5px 10px;
+    margin: auto;
   }
 }

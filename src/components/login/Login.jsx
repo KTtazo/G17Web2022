@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { urlPaths } from "../../navigation/url-paths";
 import AuthContext from "../../store/auth-context";
 import { Button } from "../button/button";
@@ -7,7 +8,16 @@ import { TextInput } from "../text-input";
 import styles from "./login.module.scss";
 
 export const LoginForm = (props) => {
-  const { onLogin } = useContext(AuthContext);
+  const { onLogin, isLoggedIn } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(urlPaths.home);
+    }
+  }, [isLoggedIn]);
+
   // const [currentForm, setCurrentForm] = useState("login");
 
   const [email, setEmail] = useState("");
@@ -24,7 +34,6 @@ export const LoginForm = (props) => {
   //   setCurrentForm(formName);
   // };
 
-  const navigate = useNavigate();
   return (
     <div className={styles["auth-form-container"]}>
       <form className={styles["login-form"]} onSubmit={handleSubmit}>
@@ -39,6 +48,7 @@ export const LoginForm = (props) => {
           type={"email"}
           placeholder={"example@gmail.com"}
           onChange={(e) => setEmail(e.target.value)}
+          className={styles["text-input"]}
         />
         {/* <TextInput
         labelFor={'diego'}
@@ -55,6 +65,7 @@ export const LoginForm = (props) => {
           type={"password"}
           placeholder={"******"}
           onChange={(e) => setPass(e.target.value)}
+          className={styles["text-input"]}
         />
 
         <div className={styles["buttons"]}>

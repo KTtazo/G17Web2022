@@ -1,12 +1,22 @@
 import { ListingsTable } from "../../components/table-of-listings";
 import { Button } from "../../components/button/button";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { urlPaths } from "../../navigation/url-paths";
 import styles from "./style.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
 
 function InicioTutor() {
+  const { isLoggedIn } = useContext(AuthContext);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate(urlPaths.home);
+    }
+  }, [isLoggedIn]);
+
   return (
     <div>
       <ListingsTable />
