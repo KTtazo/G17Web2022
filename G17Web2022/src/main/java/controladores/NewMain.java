@@ -9,9 +9,14 @@ import modelos.OfertaPracticas;
 import modelos.Persona;
 
 public class NewMain {
-
+    public static Logger logBBDD;
     public static void main(String[] args) throws NoSuchAlgorithmException, Exception {
-        
+        try {
+            logBBDD = Logger.getLogger("logger");
+            logBBDD.addHandler(new FileHandler("logBBDD.xml"));
+        }catch(Exception e){
+            
+        }
         BaseDatosUtil bd = BaseDatosUtil.getInstancia();
         bd.abrirConexion();
         
