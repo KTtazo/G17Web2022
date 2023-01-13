@@ -1,0 +1,57 @@
+h1 {
+  color: #111;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 60px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
+}
+
+h2 {
+  color: #111;
+  font-family: "Open Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 30;
+  line-height: 32px;
+  margin: 0 0 72px;
+  text-align: center;
+}
+
+p {
+  color: #76672f;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  margin: 0 0 24px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+button {
+  pointer-events: auto;
+  cursor: pointer;
+  background: #e7e7e7;
+  border: none;
+  padding: 1.5rem 3rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  position: relative;
+  display: inline-block;
+}
+
+.item {
+  color: rgb(255, 255, 255);
+  font-family: "Open Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 30;
+  line-height: 32px;
+  margin: 0 0 72px;
+  text-align: center;
+
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: rgb(84, 67, 218);
+  }
+}
