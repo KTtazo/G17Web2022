@@ -95,6 +95,7 @@ public class BaseDatosUtil {
     public void cambiarContrasena(Persona persona, String contrasena) throws Exception {
         if (persona == null) {
             NewMain.logBBDD.log(Level.WARNING ,"El usuario "+persona.getUsuario()+" no existe" );
+            NewMain.log.log(Level.WARNING ,"Error al cambiar la contrasena del usuario"+ persona.getUsuario() );
             throw new Exception("La persona no existe");
        
         }
@@ -105,6 +106,7 @@ public class BaseDatosUtil {
         ps.setString(2, persona.getUsuario());
         ps.executeUpdate();
        NewMain.logBBDD.log(Level.INFO ,"Contrasena de usuario "+persona.getUsuario()+" cambiada" );
+       NewMain.log.log(Level.INFO ,"Contrasena de usuario "+ persona.getUsuario()+ " cambiada" );
         ps.close();
     }
 
@@ -158,6 +160,7 @@ public class BaseDatosUtil {
         if (rs.next()) {
             rs.close();
             ps.close();
+            NewMain.log.log(Level.INFO ,"Sesión iniciada como ALUMNO " );
             return true;
         }
         rs.close();
@@ -173,6 +176,7 @@ public class BaseDatosUtil {
         if (rs.next()) {
             ps.close();
             rs.close();
+            NewMain.log.log(Level.INFO ,"Sesión iniciada como TUTOR " );
             return true;
         }
         rs.close();
@@ -188,6 +192,7 @@ public class BaseDatosUtil {
         if (rs.next()) {
             ps.close();
             rs.close();
+            NewMain.log.log(Level.INFO ,"Sesión iniciada como RESPONSABLE " );
             return true;
         }
         rs.close();
@@ -215,8 +220,10 @@ public class BaseDatosUtil {
             ps.close();
             return false;
         }
-        NewMain.logBBDD.log(Level.INFO ,"Empresa con nombre "+nombre +" insertada" );
+        NewMain.logBBDD.log(Level.INFO ,"Registra empresa con nombre "+nombre +" insertada" );
         ps.close();
+        NewMain.log.log(Level.INFO ,"Nueva empresa con nombre "+nombre+" registrada" );
+ 
         return true;
     }
 
@@ -239,6 +246,7 @@ public class BaseDatosUtil {
         ps.setString(3, cargo);
         try {
             ps.executeUpdate();
+            NewMain.log.log(Level.INFO ,"Tutor con nombre "+nombreUsuario+" registrado" );
         } catch (SQLIntegrityConstraintViolationException ex) { //si no se puede insertar el tutor porque la empresa no existe, hay que borrar la entrada de persona que se ha añadido antes
             consulta = "DELETE FROM Persona where usuario = ?";
             ps = conexion.prepareStatement(consulta);
@@ -248,7 +256,7 @@ public class BaseDatosUtil {
             NewMain.logBBDD.log(Level.WARNING ,"Error al registrar tutor" );
             return false;
         }
-        NewMain.logBBDD.log(Level.INFO ,"Tutor con nombre "+nombreUsuario +" insertado" );
+        NewMain.logBBDD.log(Level.INFO ,"Registra tutor con nombre "+nombreUsuario +" insertada" );
         ps.close();
         return true;
     }
@@ -272,6 +280,7 @@ public class BaseDatosUtil {
         ps.setString(14, tutor_persona_usuario);
         try {
             ps.executeUpdate();
+            
         } catch (SQLIntegrityConstraintViolationException ex) {
             ps.close();
             NewMain.logBBDD.log(Level.WARNING ,"Error al registrar oferta" );
@@ -279,6 +288,7 @@ public class BaseDatosUtil {
             
         }
         NewMain.logBBDD.log(Level.INFO ,"Nueva oferta de practicas creada" );
+            NewMain.log.log(Level.INFO ,"Nueva oferta creada" );
         ps.close();
         return true;
     }
@@ -310,6 +320,7 @@ public class BaseDatosUtil {
             );
         }
         NewMain.logBBDD.log(Level.INFO ,"Muestra todas las ofertas de practicas" );
+        NewMain.log.log(Level.INFO ,"Mostrando todas las ofertas" );
         rs.close();
         statement.close();
         return ofertasPracticas;
@@ -355,6 +366,7 @@ public class BaseDatosUtil {
             return false;
         }
         NewMain.logBBDD.log(Level.INFO ,"Regista seleccion de "+alumno_iniciado +" a oferta con id "+ id_seleccionado);
+        NewMain.log.log(Level.INFO ,"Seleccion de "+alumno_iniciado +" a oferta con id "+ id_seleccionado+ " registrada" );
         ps.close();
         return true;
     }
@@ -374,17 +386,19 @@ public class BaseDatosUtil {
             )      
             ;
         }
+         NewMain.log.log(Level.INFO ,"Mostrando todos las selecciones de Ofertas de practicas");
         NewMain.logBBDD.log(Level.INFO ,"Muestra todos las selecciones de Ofertas de practicas");
         rs.close();
         statement.close();
         return ofertaPracticas_has_Alumno;
     }   
-    public void asignarTodasPracitcas() throws SQLException{
+    public void asignarTodasPracticas() throws SQLException{
        statement = conexion.createStatement();
         rs = statement.executeQuery("SELECT * FROM oferta_practicas_has_alumno");
         while (rs.next()) {
             asignaPractica();
         }
+        NewMain.log.log(Level.INFO ,"Practicas asignadas a los alumno");
         NewMain.logBBDD.log(Level.INFO ,"Practicas asignadas a los alumno");
         rs.close();
     }
@@ -400,9 +414,20 @@ public class BaseDatosUtil {
         
         ps.executeUpdate();
         ps.close();  
+        borrarOfertasByNombre(nombreAlumno);
+        
         }
-      
+     
     }
+    public void borrarOfertasByNombre(String nombre) throws SQLException{
+        String consulta2= "DELETE FROM oferta_practicas_has_alumno "
+                            + "WHERE alumno_persona_usuario= ?";
+                    ps = conexion.prepareStatement(consulta2);
+                      ps.setString(1, nombre);
+                      ps.executeUpdate();
+                      NewMain.logBBDD.log(Level.INFO ,"Usuario: "+nombre+ " eliminado de todas las selecciones");
+                      ps.close();
+     }
     public boolean existenPlazas() throws SQLException{
         int id_oferta= elegirPorPrioridad(alumnoMejorCalificado());
         int plazas;
@@ -436,7 +461,8 @@ public class BaseDatosUtil {
                     ps = conexion.prepareStatement(consulta2);
                       ps.setInt(1, id_oferta);
                       ps.executeUpdate();
-                      NewMain.logBBDD.log(Level.WARNING ,"Oferta: "+id_oferta+"con menos de 1 plaza");
+                      NewMain.logBBDD.log(Level.WARNING ,"Oferta: "+id_oferta+" con menos de 1 plaza");
+                      NewMain.log.log(Level.WARNING ,"Oferta: "+id_oferta+" con menos de 1 plaza");
                       ps.close();
                     return false;
                 }
@@ -475,8 +501,9 @@ public class BaseDatosUtil {
                                         +"FROM Alumno ");
             int total = rs.getInt(1);
             NewMain.logBBDD.log(Level.INFO ,"Muestra numero total de alumnos");
+            NewMain.log.log(Level.WARNING ,"Mostrando numero total de alumnos");
            return total;
-            
+             
     }
     public List NumeroTotalAlumnosPorEmpresa() throws SQLException{
       List<Object> empresaRecuento = new ArrayList<Object>();
@@ -488,7 +515,8 @@ public class BaseDatosUtil {
                             "INNER JOIN Empresa " +
                             "on oferta_practicas.tutor_Empresa_cif= Empresa.cif " +
                             "GROUP BY Empresa.nombre");
-        NewMain.logBBDD.log(Level.INFO ,"Muestra numero total de alumnos por empresa");                    
+        NewMain.logBBDD.log(Level.INFO ,"Muestra numero total de alumnos por empresa");           
+         NewMain.log.log(Level.WARNING ,"Mostrando numero total de alumnos por empresa");
                return empresaRecuento;
       
            
