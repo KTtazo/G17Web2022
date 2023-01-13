@@ -10,15 +10,17 @@ import modelos.Persona;
 
 public class NewMain {
     public static Logger logBBDD;
+    public static Logger log;
     public static void main(String[] args) throws NoSuchAlgorithmException, Exception {
         try {
             logBBDD = Logger.getLogger("logger");
             logBBDD.addHandler(new FileHandler("logBBDD.xml"));
+            log = Logger.getLogger("logger");
+            log.addHandler(new FileHandler("logApp.xml"));
+            NewMain.logBBDD.log(Level.INFO ,"WEB INICIADA------------------------------------", new Date() );
         }catch(Exception e){
             
         }
-        BaseDatosUtil bd = BaseDatosUtil.getInstancia();
-        bd.abrirConexion();
         
         /*
         ArrayList<Persona> users;
