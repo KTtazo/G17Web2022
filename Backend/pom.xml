@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>web</groupId>
-    <artifactId>G17Web2022</artifactId>
+    <artifactId>Backend</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>G17Web2022</name>
+    <name>Backend</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
