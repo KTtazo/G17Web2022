@@ -15,6 +15,31 @@ export const RegisterForm = (props) => {
     e.preventDefault();
     console.log(email);
     onLogin(email, pass);
+    
+    const requestBody = {
+      email: email,
+      password: pass,
+      name: name
+    };
+
+    fetch("http://localhost:8080/urlServlet", {           //HAY QUE PONER LA URL DEL SERVLET
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "post",
+      body: JSON.stringify(requestBody),
+    })
+
+    .then((response) => {
+      if(response.status === 200) {
+        console.log("----Registration succesfull----");
+      }else
+        console.log("----Registration failed----");
+    })
+    .catch((message) => { 
+      alert(message);
+      console.log("----Registration failed----");
+    });
   };
   return (
     <div className={styles["auth-form"]}>

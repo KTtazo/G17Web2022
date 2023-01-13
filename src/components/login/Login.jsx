@@ -29,6 +29,31 @@ export const LoginForm = (props) => {
     console.log(email);
     console.log(pass);
     onLogin(email, pass);
+    
+    const requestBody = {
+      email: email,
+      password: pass
+    };
+
+    fetch("http://localhost:8080/urlServlet", {           //HAY QUE PONER LA URL DEL SERVLET
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "post",
+      body: JSON.stringify(requestBody),
+    })
+
+    .then((response) => {
+      if(response.status === 200) {
+        console.log("----Login succesfull----");
+        navigate(urlPaths.inicioAlumno)
+      }else
+        console.log("----Login failed----");
+    })
+    .catch((message) => { 
+      alert(message);
+      console.log("----Login failed----");
+    });
   };
   // const toggleForm = (formName) => {
   //   setCurrentForm(formName);

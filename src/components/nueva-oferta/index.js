@@ -14,6 +14,32 @@ function NuevaOfertaForm() {
     console.log(turnos);
     console.log(semanas);
     console.log(alumnos);
+    
+    const requestBody = {
+      titulo: titulo,
+      turnos: turnos,
+      semanas: semanas,
+      alumnos: alumnos
+    };
+
+    fetch("http://localhost:8080/urlServlet", {              //HAY QUE PONER LA URL DEL SERVLET
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "post",
+      body: JSON.stringify(requestBody),
+    })
+
+    .then((response) => {
+      if(response.status === 200) {
+        console.log("----Insert succesfull----");
+      }else
+        console.log("----Insert failed----");
+    })
+    .catch((message) => { 
+      alert(message);
+      console.log("----Insert failed----");
+    });
   };
   return (
     <div className={styles["nueva-oferta-container"]}>
