@@ -538,24 +538,25 @@ public class BaseDatosUtil {
         }
         ps.close();
         NewMain.logBBDD.log(Level.INFO ,"Informe de alumno: "+ Alumno_Persona_usuario+" creado" );
+       NewMain.logBBDD.log(Level.INFO ,"Informe general descargado" );
         return true;
         
     }
    
     public void generaInformeGlobal() throws FileNotFoundException, SQLException, IOException{
         ArrayList<InformePracticas> informe = new ArrayList();
-        File csvFile = new File("//Documentos/InformeGeneral.csv");
+        File csvFile = new File("InformeGeneral.csv");
         PrintWriter out = new PrintWriter(csvFile);
         statement = conexion.createStatement();
         rs = statement.executeQuery("SELECT * FROM InformePracticas");
         while (rs.next()) {
             informe.add(
                 new InformePracticas(
-                    rs.getString("comentarios"),
-                    rs.getDouble("nota"),
-                    rs.getString("Tutor_Persona_usuario"),
-                    rs.getString("Tutor_Empresa_cif"),
-                    rs.getString("Alumno_Persona_usuario")
+                    rs.getString("COMENTARIOS"),
+                    rs.getDouble("NOTA"),
+                    rs.getString("TUTOR"),
+                    rs.getString("CIF DE LA EMPRESA"),
+                    rs.getString("USUARIO")
                     )
             );
         }
@@ -567,8 +568,9 @@ public class BaseDatosUtil {
                     informePracticas.getTutor_Persona_usuario());
         }
          NewMain.logBBDD.log(Level.INFO ,"Acceso a todos los informes" );
+          NewMain.logBBDD.log(Level.INFO ,"Informe general descargado" );
         out.close();
         rs.close();
         statement.close();
-    }      
+    }    
 }
