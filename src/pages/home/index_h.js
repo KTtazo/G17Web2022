@@ -1,24 +1,11 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { LoginForm } from "../../components/login/Login";
-import { RegisterForm } from "../../components/register/Register";
+import AuthContext from "../../store/auth-context";
+import { InicioAlumno } from "../inicio-alumno/index_ia";
 function Home() {
-  const [currentForm, setCurrentForm] = useState("login");
+  const { isLoggedIn } = useContext(AuthContext);
 
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  };
-  return (
-    <>
-      {
-        //(ternary operator)check if condition is true(first statement) else (second)
-        currentForm === "login" ? (
-          <LoginForm onFormSwitch={toggleForm} />
-        ) : (
-          <RegisterForm />
-        )
-      }
-    </>
-  );
+  return <>{!isLoggedIn ? <LoginForm /> : <InicioAlumno />}</>;
 }
 
 export { Home };

@@ -1,5 +1,5 @@
 function NotFound() {
-  return <div>the component ur lookin for doesnt exist :(</div>;
+  return <div>La página buscada no existe</div>;
 }
 
 export { NotFound };

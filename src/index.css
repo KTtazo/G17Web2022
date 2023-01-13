@@ -143,3 +143,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+
+html {
+  overflow: auto;
+  overflow-x: hidden;
+  scrollbar-color: #000 #515151;
+  scrollbar-width: inherit;
+  scroll-behavior: smooth;
+  height: 100%;
+  min-height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 17px;
+}
+
+::-webkit-scrollbar-track {
+  background: #777;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 2px;
+}
